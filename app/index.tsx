@@ -6,7 +6,7 @@ const App = () => {
   const [isMember, setIsMember] = useState(false);
 
   const handleMemberPress = () => {
-    const url = 'https://auth.manhattan.edu/idp/profile/cas/login?execution=e3s1';
+    const url = 'https://banner-ssb-prod.manhattan.edu/BannerGeneralSsb/ssb/general#/home';
     Linking.openURL(url);
   };
   const handleGuestPress = () => {
