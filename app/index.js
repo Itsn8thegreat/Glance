@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, BackHandler } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native';
+
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -13,8 +19,31 @@ const Settings = () => <Text>Settings</Text>;
 const Dining = () => <Text>Dining</Text>;
 const Map = () => <Text>Map</Text>;
 
-// Home screen from the image you provided
-const HomeScreen = () => {
+// WebView component with Back Button functionality
+const WebViewScreen = ({ route, navigation }) => {
+  const { url } = route.params;
+  const webViewRef = useRef(null);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
+      <WebView
+        ref={webViewRef}
+        source={{ uri: url }}
+        onNavigationStateChange={(navState) => {
+          if (!navState.canGoBack) {
+            BackHandler.exitApp();
+          }
+        }}
+      />
+    </View>
+  );
+};
+
+// Home screen
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.homeContainer}>
       <Text style={styles.title}>GLANCE</Text>
@@ -26,9 +55,9 @@ const HomeScreen = () => {
         <Text style={styles.barcodeText}>62772206580147914</Text>
       </View>
 
-      {/* 2x3 Grid of Square Buttons */}
+      {/* 2x4 Grid of Buttons */}
       <View style={styles.numberPad}>
-        {[...Array(6)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <TouchableOpacity
             key={i}
             style={styles.numberButton}
@@ -40,19 +69,31 @@ const HomeScreen = () => {
       </View>
 
       {/* Inside Manhattan Button */}
-      <TouchableOpacity style={styles.insideManhattanButton}>
+      <TouchableOpacity
+        style={styles.insideManhattanButton}
+        onPress={() =>
+          navigation.navigate('WebViewScreen', {
+            url: 'https://inside.manhattan.edu/index.php?test=1&q=&hPP=200&idx=TasksServices&p=0&hFR[category][0]=Featured&is_v=1',
+          })
+        }
+      >
         <Text style={styles.insideManhattanText}>INSIDE MANHATTAN</Text>
       </TouchableOpacity>
 
       {/* Events Button */}
-      <TouchableOpacity style={styles.eventsButton}>
+      <TouchableOpacity
+        style={styles.eventsButton}
+        onPress={() =>
+          navigation.navigate('WebViewScreen', { url: 'https://manhattan.edu/events.php' })
+        }
+      >
         <Text style={styles.eventsText}>EVENTS</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-// Email validation function using regex
+// Email validation function
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -78,24 +119,24 @@ const MainScreen = ({ navigation }) => {
       valid = false;
     }
 
-    // Validate password (check if it's empty)
+    // Validate password
     if (password === '') {
       setPasswordError('Password cannot be empty.');
       valid = false;
     }
 
-    // If valid, navigate to the Home screen
+    // If valid, navigate to the App tabs screen
     if (valid) {
-      navigation.replace('Home');
+      navigation.replace('AppTabs');
     }
   };
 
   return (
-    <View style={styles.loginContainer}>
-      <Text style={styles.title}>GLANCE</Text>
-      <Text style={styles.subtitle}>Manhattan College App for Faculty and Students</Text>
+    <View style={[styles.homeContainer, { backgroundColor: '#ffffff' }]}>
+    <Text style={styles.title}>GLANCE</Text>
+    <Text style={styles.subtitle}>Manhattan College Students and Faculty App</Text>
+    {/* Your other components */}
 
-      {/* Email input */}
       <TextInput
         style={[styles.input, emailError ? styles.inputError : null]}
         placeholder="Email"
@@ -133,7 +174,7 @@ const AppTabs = () => (
       tabBarIcon: ({ color, size }) => {
         let iconName;
 
-        if (route.name === 'Home') {
+        if (route.name === 'HomeTab') {
           iconName = 'home';
         } else if (route.name === 'Settings') {
           iconName = 'settings';
@@ -149,11 +190,12 @@ const AppTabs = () => (
     tabBarOptions={{
       activeTintColor: 'tomato',
       inactiveTintColor: 'gray',
-    }}>
-    <Tab.Screen name="Home" component={HomeScreen} />
-    <Tab.Screen name="Dining" component={Dining} />
-    <Tab.Screen name="Map" component={Map} />
-    <Tab.Screen name="Settings" component={Settings} />
+    }}
+  >
+    <Tab.Screen name="HomeTab" component={HomeScreen} options={{ headerShown: false }} />
+    <Tab.Screen name="Dining" component={Dining} options={{ headerShown: false }} />
+    <Tab.Screen name="Map" component={Map} options={{ headerShown: false }} />
+    <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
   </Tab.Navigator>
 );
 
@@ -161,19 +203,25 @@ const AppTabs = () => (
 const AppStack = () => (
   <Stack.Navigator initialRouteName="MainScreen">
     <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
-    <Stack.Screen name="Home" component={AppTabs} options={{ headerShown: false }} />
+    <Stack.Screen name="AppTabs" component={AppTabs} options={{ headerShown: false }} />
+    <Stack.Screen name="WebViewScreen" component={WebViewScreen} options={{ headerShown: false }} />
   </Stack.Navigator>
 );
 
 // Main app component
 const App = () => {
   return (
-    <NavigationContainer independent={true}>
-      <AppStack />
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" hidden={false} />
+      <NavigationContainer independent={true}>
+        <AppStack />
+      </NavigationContainer>
+    </SafeAreaView>
+
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
@@ -216,17 +264,18 @@ const styles = StyleSheet.create({
   numberPad: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: '65%',
+    width: '80%',
     justifyContent: 'center',
     marginVertical: 20,
   },
   numberButton: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 60,
     backgroundColor: '#000',
     margin: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 15, // Rounded edges
   },
   buttonText: {
     color: 'white',
@@ -234,25 +283,25 @@ const styles = StyleSheet.create({
   },
   insideManhattanButton: {
     width: '75%',
-    paddingVertical: 10,
+    paddingVertical: 15, // Increased padding for larger button
     backgroundColor: 'green',
-    borderRadius: 5,
+    borderRadius: 20, // Curved edges
     marginVertical: 10,
   },
   insideManhattanText: {
-    fontSize: 18,
+    fontSize: 20, // Increased font size
     color: 'white',
     textAlign: 'center',
   },
   eventsButton: {
     width: '75%',
-    paddingVertical: 10,
+    paddingVertical: 15, // Increased padding for larger button
     backgroundColor: 'black',
-    borderRadius: 5,
+    borderRadius: 20, // Curved edges
     marginVertical: 10,
   },
   eventsText: {
-    fontSize: 18,
+    fontSize: 20, // Increased font size
     color: 'white',
     textAlign: 'center',
   },
@@ -283,6 +332,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
+  },
+  backButton: {
+    padding: 10,
+    backgroundColor: '#ddd',
+    alignItems: 'center',
+  },
+  backButtonText: {
+    color: '#000',
+    fontSize: 18,
   },
 });
 
