@@ -1,33 +1,52 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { isValidEmail } from '../utils/validation'; // Importing email validation utility
+import { FIREBASE_AUTH } from '../../FirebaseConfig'; // Ensure correct import path for Firebase config
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const MainScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
 
-  const handleLoginPress = () => {
-    let valid = true;
+  // Email validation and Firebase login
+  const handleLoginPress = async () => {
+    // Reset error messages
     setEmailError('');
     setPasswordError('');
+
+    let isValid = true;
 
     // Validate email
     if (!isValidEmail(email)) {
       setEmailError('Please enter a valid email address.');
-      valid = false;
+      isValid = false;
     }
 
     // Validate password
     if (password === '') {
       setPasswordError('Password cannot be empty.');
-      valid = false;
+      isValid = false;
     }
 
-    // Navigate if valid
-    if (valid) {
-      navigation.replace('AppTabs');
+    if (!isValid) {
+      return;
+    }
+
+    setLoading(true); // Start loading indicator
+
+    try {
+      // Firebase sign-in
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response);
+      navigation.replace('AppTabs'); // Navigate to AppTabs upon successful login
+    } catch (error) {
+      alert('Login failed: ' + "User not registered"); // Display error to user
+    } finally {
+      setLoading(false); // Stop loading indicator
     }
   };
 
@@ -58,7 +77,11 @@ const MainScreen = ({ navigation }) => {
       {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLoginPress}>
-        <Text style={styles.loginText}>Login</Text>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <Text style={styles.loginText}>Login</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -73,7 +96,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 75,
     color: '#008000',
-    fontFamily: 'MP-Bold',
     textAlign: 'center',
     lineHeight: 75,
   },

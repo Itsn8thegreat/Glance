@@ -6,6 +6,7 @@ import Dining from '../screens/Dining';
 import Map from '../screens/Map';
 import Settings from '../screens/Settings.js';
 
+
 const Tab = createBottomTabNavigator();
 
 const AppTabs = () => (
@@ -25,10 +26,6 @@ const AppTabs = () => (
         return <Ionicons name={iconName} size={size} color={color} />;
       },
     })}
-    tabBarOptions={{
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-    }}
   >
     <Tab.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
     <Tab.Screen name="Dining" component={Dining} options={{ headerShown: false }} />

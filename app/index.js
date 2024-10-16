@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AppTabs from './Navigation/AppTabs';
 import MainScreen from './screens/MainScreen';
 import WebviewScreen from './Components/WebviewScreen';
+import Social from './screens/SocialMediaScreen.js'; // Example screen
 
 const Stack = createStackNavigator();
 
@@ -13,14 +14,15 @@ const AppStack = () => (
     <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
     <Stack.Screen name="AppTabs" component={AppTabs} options={{ headerShown: false }} />
     <Stack.Screen name="WebviewScreen" component={WebviewScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Social" component={Social} options={{ headerShown: false }}  />
   </Stack.Navigator>
 );
 
 const App = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" hidden={false} />
-      <NavigationContainer independent={true}>
+     <StatusBar barStyle="dark-content" backgroundColor="#ffffff" hidden={false} />
+     <NavigationContainer independent={true}>
         <AppStack />
       </NavigationContainer>
     </SafeAreaView>
