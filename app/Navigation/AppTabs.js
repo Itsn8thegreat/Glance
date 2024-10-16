@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen.js';
-import Dining from '../screens/Dining';
+import RestaurantsScreen from '../screens/restaurants.js';
 import Map from '../screens/Map';
 import Settings from '../screens/Settings.js';
 
@@ -16,7 +16,7 @@ const AppTabs = () => (
         let iconName;
         if (route.name === 'HomeScreen') {
           iconName = 'home';
-        } else if (route.name === 'Dining') {
+        } else if (route.name === 'RestaurantsScreen') {
           iconName = 'restaurant-sharp';
         } else if (route.name === 'Map') {
           iconName = 'map';
@@ -28,7 +28,7 @@ const AppTabs = () => (
     })}
   >
     <Tab.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
-    <Tab.Screen name="Dining" component={Dining} options={{ headerShown: false }} />
+    <Tab.Screen name="RestaurantsScreen" component={RestaurantsScreen} options={{ headerShown: false }} />
     <Tab.Screen name="Map" component={Map} options={{ headerShown: false }} />
     <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
   </Tab.Navigator>
