@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import { RestaurantsContext } from "../services/restaurants/restaurants.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { RestaurantInfoCard } from "../Components/restaurant-info-card.component";
+import { Search } from "../Components/search.component";
 
 
 const SafeArea = styled(SafeAreaView)`
@@ -33,9 +34,7 @@ export const RestaurantsScreen = () => {
                />
            </View>
        )}
-       <SearchContainer>
-           <Searchbar />
-       </SearchContainer>
+       <Search />
        <FlatList
            data={restaurants}
            renderItem = {({ item }) => {

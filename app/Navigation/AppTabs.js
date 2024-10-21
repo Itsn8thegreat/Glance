@@ -11,7 +11,7 @@ import { View, Text, TouchableOpacity, Linking } from 'react-native';
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "../infrastructure/theme/index.js";
 import { RestaurantsContextProvider } from "../services/restaurants/restaurants.context.js";
-
+import { LocationContextProvider  } from '../services/location/location.context.js';
 
 
 const Tab = createBottomTabNavigator();
@@ -19,10 +19,12 @@ const Tab = createBottomTabNavigator();
 const wrappedRestaurant = () => {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <RestaurantsContextProvider>
-          <RestaurantsScreen />
-        </RestaurantsContextProvider>
+      <ThemeProvider theme = {theme}>
+        <LocationContextProvider>
+          <RestaurantsContextProvider>
+            <RestaurantsScreen />
+          </RestaurantsContextProvider>
+        </LocationContextProvider>
       </ThemeProvider>
     </>
   );
