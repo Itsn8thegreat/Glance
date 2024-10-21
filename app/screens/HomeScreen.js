@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig'; // Import your Firebase config
+import { StatusBar } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
   const [barcodeUrl, setBarcodeUrl] = useState('');
@@ -47,6 +48,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.homeContainer}>
+      <StatusBar barStyle="dark-content" backgroundColor="#FF0000" />
       <Text style={styles.title}>GLANCE</Text>
       <Text style={styles.subtitle}>Manhattan College Students and Faculty App</Text>
 

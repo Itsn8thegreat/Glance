@@ -19,19 +19,11 @@ const AppStack = () => (
     <Stack.Screen name="AppTabs" component={AppTabs} options={{ headerShown: false }} />
     <Stack.Screen name="WebviewScreen" component={WebviewScreen} options={{ headerShown: false }} />
     <Stack.Screen name="Social" component={Social} options={{ headerShown: false }} />
-    <Stack.Screen name="Restaurants" component={RestaurantsScreenWrapper} options={{ headerShown: false }} />
+    <Stack.Screen name="Restaurants" component={RestaurantsScreen} options={{ headerShown: false }} />
   </Stack.Navigator>
 );
 
-const RestaurantsScreenWrapper = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <RestaurantsContextProvider>
-        <RestaurantsScreen />
-      </RestaurantsContextProvider>
-    </ThemeProvider>
-  );
-};
+
 
 const App = () => {
   return (

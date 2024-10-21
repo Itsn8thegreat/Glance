@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { Searchbar } from "react-native-paper";
-import { View, StatusBar, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { View, StatusBar, SafeAreaView, FlatList } from "react-native";
 import styled from "styled-components/native";
 import { RestaurantsContext } from "../services/restaurants/restaurants.context";
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 import { RestaurantInfoCard } from "../Components/restaurant-info-card.component";
 import { Search } from "../Components/search.component";
 
@@ -13,15 +12,8 @@ const SafeArea = styled(SafeAreaView)`
    ${StatusBar.currentHeight && 'margin-top: ${StatusBar.currentHeight}px'};
 `;
 
-
-const SearchContainer = styled.View`
-   padding: ${(props) => props.theme.space[3]};
-`;
-
-
 export const RestaurantsScreen = () => {
-   const {isLoading, error, restaurants} = useContext(RestaurantsContext);
-
+   const {isLoading, restaurants} = useContext(RestaurantsContext);
 
    return (
    <SafeArea>
