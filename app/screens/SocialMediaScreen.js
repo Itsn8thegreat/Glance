@@ -1,79 +1,100 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { WebView } from 'react-native-webview'; // Import WebView
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 
-const Social = () => {
+
+// Import your images
+const twitterIcon = require('../assets/twitter.png');
+const youtubeIcon = require('../assets/youtube.png');
+const instagramIcon = require('../assets/instagram.png');
+const facebookIcon = require('../assets/facebook.png'); // Corrected variable name
+
+
+const MainScreen = () => {
   const navigation = useNavigation();
 
-  // Function to open social media links
-  const openLink = (url) => {
-    Linking.openURL(url).catch((err) => console.error("An error occurred", err));
+
+  // Function to navigate to WebviewScreen with URL
+  const navigateToWebView = (url) => {
+    navigation.navigate('WebviewScreen', { url });
   };
 
+
   return (
-    <View style={styles.container}>
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>Back</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* Back Button (optional, if you want to allow navigation back) */}
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
 
-      {/* Header */}
+
       <Text style={styles.header}>SOCIALS</Text>
+
 
       {/* Social Media Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.socialButton} onPress={() => openLink('https://twitter.com')}>
-          <Text style={styles.buttonText}>Twitter</Text>
+        <TouchableOpacity style={styles.socialButton} onPress={() => navigateToWebView('https://x.com/manhattanedu?lang=en')}>
+          <Image source={twitterIcon} style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton} onPress={() => openLink('https://youtube.com')}>
-          <Text style={styles.buttonText}>YouTube</Text>
+        <TouchableOpacity style={styles.socialButton} onPress={() => navigateToWebView('https://www.youtube.com/@manhattanuniversityedu')}>
+          <Image source={youtubeIcon} style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton} onPress={() => openLink('https://instagram.com')}>
-          <Text style={styles.buttonText}>Instagram</Text>
+        <TouchableOpacity style={styles.socialButton} onPress={() => navigateToWebView('https://www.instagram.com/manhattanedu/?hl=en')}>
+          <Image source={instagramIcon} style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton} onPress={() => openLink('https://x.com')}>
-          <Text style={styles.buttonText}>X</Text>
+        <TouchableOpacity style={styles.socialButton} onPress={() => navigateToWebView('https://www.facebook.com/ManhattanUniversityEdu/?_rdr')}>
+          <Image source={facebookIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
 
-      {/* Feed Title */}
-      <Text style={styles.feedTitle}>FEED</Text>
 
-      {/* Feed Boxes */}
+      {/* Instagram Feed WebView */}
       <View style={styles.feedContainer}>
-        <View style={styles.feedBox} />
-        <View style={styles.feedBox} />
-        <View style={styles.feedBox} />
+        <WebView
+          source={{ uri: 'https://www.instagram.com/manhattanedu/embed' }} // Embed Manhattan College's Instagram feed
+          style={styles.webview}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+        />
       </View>
-    </View>
+
+
+      {/* YouTube Video WebView */}
+      <View style={styles.feedContainer}>
+        <WebView
+          source={{ uri: 'https://www.youtube.com/embed/fZzc7csCdB8' }} // Embed specific YouTube video
+          style={styles.webview}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'flex-start', // Change to flex-start to position header and buttons at the top
+    backgroundColor: 'white',
   },
   backButton: {
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start', // Aligns back button to the start
     margin: 10,
-  },
-  backButtonText: {
-    color: 'blue',
-    fontSize: 16,
   },
   header: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'green',
-    marginTop: 20,
+    marginVertical: 20,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '80%',
-    marginVertical: 20,
   },
   socialButton: {
     flex: 1,
@@ -82,26 +103,22 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  feedTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'green',
-    marginVertical: 20,
+  icon: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
   },
   feedContainer: {
-    width: '90%',
+    width: '100%', // Full width
+    height: 400, // Adjust height as needed
+    marginTop: 20, // Add space between buttons and feed
   },
-  feedBox: {
-    height: 100,
-    backgroundColor: 'black',
-    marginVertical: 10,
-    borderRadius: 10,
+  webview: {
+    flex: 1,
   },
 });
 
-export default Social;
+
+export default MainScreen;
