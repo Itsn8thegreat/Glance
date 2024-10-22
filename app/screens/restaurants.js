@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, StatusBar, SafeAreaView, FlatList } from "react-native";
+import { View, StatusBar, SafeAreaView, FlatList, Platform } from "react-native";
 import styled from "styled-components/native";
 import { RestaurantsContext } from "../services/restaurants/restaurants.context";
 import { ActivityIndicator } from "react-native-paper";
@@ -9,14 +9,14 @@ import { Search } from "../Components/search.component";
 
 const SafeArea = styled(SafeAreaView)`
    background-color: green;
-   ${StatusBar.currentHeight && 'margin-top: ${StatusBar.currentHeight}px'};
+   flex: 1;
 `;
 
 export const RestaurantsScreen = () => {
    const {isLoading, restaurants} = useContext(RestaurantsContext);
-
+   const marginTop = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
    return (
-   <SafeArea>
+   <SafeArea style={{ marginTop }}>
        {isLoading && (
            <View style={{ position:"absolute", top:"300%", left:"50%"}}>
                <ActivityIndicator
