@@ -23,6 +23,15 @@ const AppStack = () => (
   </Stack.Navigator>
 );
 
+const RestaurantsScreenWrapper = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <RestaurantsContextProvider>
+        <RestaurantsScreen />
+      </RestaurantsContextProvider>
+    </ThemeProvider>
+  );
+};
 
 const App = () => {
   return (

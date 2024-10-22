@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen.js';
 import RestaurantsScreen from '../screens/restaurants.js';
-import Map from '../screens/Map';
+import MapScreen from '../screens/Map.js';
 import Settings from '../screens/Settings.js';
 import {StatusBar} from 'expo-status-bar';
 import { useState } from  'react';
@@ -29,6 +29,7 @@ const wrappedRestaurant = () => {
     </>
   );
  };
+
  
 
 const AppTabs = () => (
@@ -38,7 +39,7 @@ const AppTabs = () => (
         let iconName;
         if (route.name === 'HomeScreen') {
           iconName = 'home';
-        } else if (route.name === 'RestaurantsScreen') {
+        } else if (route.name === 'Restaurants') {
           iconName = 'restaurant-sharp';
         } else if (route.name === 'Map') {
           iconName = 'map';
@@ -50,8 +51,8 @@ const AppTabs = () => (
     })}
   >
     <Tab.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
-    <Tab.Screen name="RestaurantsScreen" component={wrappedRestaurant} options={{ headerShown: false }} />
-    <Tab.Screen name="Map" component={Map} options={{ headerShown: false }} />
+    <Tab.Screen name="Restaurants" component={wrappedRestaurant} options={{ headerShown: false }} />
+    <Tab.Screen name="Map" component={MapScreen} options={{ headerShown: false }}/>
     <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
   </Tab.Navigator>
 );

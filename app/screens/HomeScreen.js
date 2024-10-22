@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig'; // Import your Firebase config
+import { StatusBar } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
 const [barcodeUrl, setBarcodeUrl] = useState('');
@@ -44,10 +45,10 @@ const handleButtonPress = (index) => {
   }
 };
 
-return (
-  <View style={styles.homeContainer}>
-    <Text style={styles.title}>GLANCE</Text>
-    <Text style={styles.subtitle}>Manhattan College Students and Faculty App</Text>
+  return (
+    <View style={styles.homeContainer}>
+      <Text style={styles.title}>GLANCE</Text>
+      <Text style={styles.subtitle}>Manhattan College Students and Faculty App</Text>
 
     {/* Display the barcode */}
     <View style={styles.barcodeContainer}>
