@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { WebView } from 'react-native-webview'; // Import WebView
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 
-
+//
 // Import your images
 const twitterIcon = require('../assets/twitter.png');
 const youtubeIcon = require('../assets/youtube.png');
