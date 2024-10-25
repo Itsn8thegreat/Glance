@@ -10,8 +10,11 @@ import { ThemeProvider } from "styled-components/native";
 import { theme } from "./infrastructure/theme/index.js";
 import { RestaurantsContextProvider } from "./services/restaurants/restaurants.context.js";
 import { RestaurantsScreen } from "./screens/restaurants.js";
+import ScheduleScreen from "./screens/ScheduleScreen.js";
+
 
 const Stack = createStackNavigator();
+
 
 const AppStack = () => (
   <Stack.Navigator initialRouteName="MainScreen">
@@ -20,8 +23,10 @@ const AppStack = () => (
     <Stack.Screen name="WebviewScreen" component={WebviewScreen} options={{ headerShown: false }} />
     <Stack.Screen name="Social" component={Social} options={{ headerShown: false }} />
     <Stack.Screen name="Restaurants" component={RestaurantsScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="ScheduleScreen" component={ScheduleScreen} options={{ headerShown: false }} />
   </Stack.Navigator>
 );
+
 
 const RestaurantsScreenWrapper = () => {
   return (
@@ -32,6 +37,7 @@ const RestaurantsScreenWrapper = () => {
     </ThemeProvider>
   );
 };
+
 
 const App = () => {
   return (
@@ -44,11 +50,13 @@ const App = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
   },
 });
+
 
 export default App;
