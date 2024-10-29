@@ -11,6 +11,7 @@ import { theme } from "./infrastructure/theme/index.js";
 import { RestaurantsContextProvider } from "./services/restaurants/restaurants.context.js";
 import { RestaurantsScreen } from "./screens/restaurants.js";
 import ScheduleScreen from "./screens/ScheduleScreen.js";
+import AssignmentsScreen from './screens/assignments.js';
 
 
 const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ const AppStack = () => (
     <Stack.Screen name="Social" component={Social} options={{ headerShown: false }} />
     <Stack.Screen name="Restaurants" component={RestaurantsScreen} options={{ headerShown: false }} />
     <Stack.Screen name="ScheduleScreen" component={ScheduleScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="AssignmentsScreen" component={AssignmentsScreen} options={{ headerShown: false }} />
   </Stack.Navigator>
 );
 

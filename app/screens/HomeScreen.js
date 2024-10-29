@@ -26,8 +26,8 @@ const HomeScreen = ({ navigation }) => {
   const buttonImages = [
     require('../assets/social.png'),
     require('../assets/Schedule.png'),
-    require('../assets/social.png'),
-    require('../assets/black.png'),
+    require('../assets/assignments.png'),
+    require('../assets/moodle.png'),
     require('../assets/black.png'),
     require('../assets/black.png'),
     require('../assets/black.png'),
@@ -46,6 +46,12 @@ const HomeScreen = ({ navigation }) => {
       case 1:
         navigation.navigate('ScheduleScreen'); // Navigate to ScheduleScreen
         break;
+      case 2:
+        break;
+      case 3:
+        navigation.navigate('AssignmentsScreen'); 
+        break;
+        
       // Add similar cases for other buttons/screens
       default:
         console.log(`Button ${index + 1} pressed`);
@@ -140,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   barcodeImage: {
-    width: 300,
+    width: 400,
     height: 150,
     resizeMode: 'contain',
   },
