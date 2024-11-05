@@ -8,6 +8,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+from threading import Thread
+import requests
+import time
 
 # Flask app setup
 app = Flask(__name__)
@@ -124,6 +127,7 @@ def get_assignments():
                     'link': link,
                     'course': course_title
                 })
+            
 
             except AttributeError as e:
                 print(f"Error processing event {i + 1}: {e}")
@@ -132,11 +136,26 @@ def get_assignments():
         if not assignments:
             return jsonify({"error": "No assignments found"}), 404
 
+        with open("assignments.json", "w") as json_file:
+            json.dump(assignments, json_file, indent=4)
+            print("Assignments data saved to assignments.json")
         return jsonify(assignments), 200
 
     except Exception as e:
         print(f"Error in get_assignments: {e}")
         return jsonify({"error": str(e)}), 500
 
+def run_server():
+    app.run(debug=True, host='0.0.0.0', use_reloader=False, port=5000)
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    server_thread = Thread(target=run_server)
+    server_thread.start()
+    time.sleep(2)
+    try:
+        response = requests.get('http://127.0.0.1:5000/assignments')
+        print("Assignments data:", response.json())
+    except requests.exceptions.RequestException as e:
+        print('Error fetching assignments:', e)
+    
+
