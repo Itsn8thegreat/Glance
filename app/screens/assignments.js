@@ -16,7 +16,12 @@ const AssignmentsScreen = () => {
     fetch('http://localhost:5000/assignments')
       .then((response) => response.json())
       .then((data) => {
-        setAssignments(data);
+        // If data contains an error, handle it
+        if (data.error) {
+          console.error('Error fetching assignments:', data.error);
+        } else {
+          setAssignments(data);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -38,10 +43,10 @@ const AssignmentsScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {assignments.map((assignment, index) => (
           <View key={index} style={styles.assignmentCard}>
-            <Text style={styles.assignmentTitle}>{assignment.name}</Text>
+            <Text style={styles.assignmentTitle}>{assignment.title}</Text>
             <Text>Course: {assignment.course}</Text>
             <Text>Due Date: {assignment.due_date}</Text>
-            <Text>Status: {assignment.status}</Text>
+            <Text>Link: {assignment.link}</Text> {/* Display the link if needed */}
           </View>
         ))}
       </ScrollView>
