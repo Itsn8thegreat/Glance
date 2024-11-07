@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import assignmentsData from '../../Moodle_backend/assignments.json';
+import assignmentsData from '../../Backend/assignments.json';
 import { Ionicons } from '@expo/vector-icons';
 
 const AssignmentsScreen = () => {
