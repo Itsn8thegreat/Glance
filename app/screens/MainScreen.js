@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator 
 import { isValidEmail } from '../utils/validation'; // Importing email validation utility
 import { FIREBASE_AUTH } from '../../FirebaseConfig'; // Ensure correct import path for Firebase config
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import * as FileSystem from 'expo-file-system';
 
 const MainScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,31 @@ const MainScreen = ({ navigation }) => {
   const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
+  const fileUri = FileSystem.documentDirectory + 'editme.json';
+
+  const saveDataToFile = async () => {
+    const data = {
+      username: email.split('@')[0],
+      password: password,
+    };
+
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data, null, 4));
+      console.log('Data saved to editme.json');
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  };
+  const readDataFromFile = async () => {
+    try {
+      const fileContents = await FileSystem.readAsStringAsync(fileUri);
+      const data = JSON.parse(fileContents);
+      console.log('Data read from editme.json:', data);
+      return data; // This returns the data if you want to use it elsewhere
+    } catch (error) {
+      console.error('Error reading data:', error);
+    }
+  };
 
   // Email validation and Firebase login
   const handleLoginPress = async () => {
@@ -42,6 +68,8 @@ const MainScreen = ({ navigation }) => {
       // Firebase sign-in
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
+      await saveDataToFile();
+      await readDataFromFile();
       navigation.replace('AppTabs'); // Navigate to AppTabs upon successful login
     } catch (error) {
       alert('Login failed: ' + "User not registered"); // Display error to user
@@ -78,7 +106,7 @@ const MainScreen = ({ navigation }) => {
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLoginPress}>
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#FFFFFF" />
         ) : (
           <Text style={styles.loginText}>Login</Text>
         )}
