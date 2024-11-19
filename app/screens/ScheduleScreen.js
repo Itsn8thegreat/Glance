@@ -1,18 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 import { useNavigation } from '@react-navigation/native';
 
-
 const ScheduleScreen = () => {
   const navigation = useNavigation();
-
 
   // Example function to handle button press
   const handleClassInfoPress = (index) => {
     console.log(`Class Info Button ${index + 1} pressed`);
   };
-
 
   return (
     <View style={styles.container}>
@@ -20,16 +17,20 @@ const ScheduleScreen = () => {
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-     
+
       <Text style={styles.header}>SCHEDULE</Text>
       <Text style={styles.subheader}>WEEK AT A GLANCE</Text>
 
-
-      <View style={styles.greenBox} />
-
+      {/* Green Box replaced with Image */}
+      <View style={styles.greenBox}>
+        <Image
+          source={require('../../Backend/course_schedule.png')} // Adjust path as needed
+          style={styles.scheduleImage}
+          resizeMode="contain"
+        />
+      </View>
 
       <Text style={styles.classInfoHeader}>CLASS INFO</Text>
-
 
       <View style={styles.classInfoContainer}>
         {Array.from({ length: 8 }, (_, index) => (
@@ -45,7 +46,6 @@ const ScheduleScreen = () => {
     </View>
   );
 };
-
 
 // Styles
 const styles = StyleSheet.create({
@@ -72,9 +72,15 @@ const styles = StyleSheet.create({
   },
   greenBox: {
     width: '100%',
-    height: 100,
+    height: 200, // Increased height for larger image
     backgroundColor: 'green',
+    justifyContent: 'center', // Center the image vertically
+    alignItems: 'center', // Center the image horizontally
     marginBottom: 20,
+  },
+  scheduleImage: {
+    width: '1000%', // Increased width
+    height: '100%', // Increased height
   },
   classInfoHeader: {
     fontSize: 24,
@@ -103,7 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default ScheduleScreen;
-
-

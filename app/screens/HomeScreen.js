@@ -47,9 +47,9 @@ const HomeScreen = ({ navigation }) => {
         navigation.navigate('ScheduleScreen'); // Navigate to ScheduleScreen
         break;
       case 2:
+        navigation.navigate('AssignmentsScreen'); 
         break;
       case 3:
-        navigation.navigate('AssignmentsScreen'); 
         break;
         
       // Add similar cases for other buttons/screens
