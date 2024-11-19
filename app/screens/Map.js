@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
   marker: {
     width: 12,
     height: 12,
-    backgroundColor: 'green',
+    backgroundColor: 'chartreuse',
     borderRadius: 10,
   },
   markerText: {
-    color: 'green',
+    color: 'chartreuse',
     fontSize: 16,
     marginTop: 4,
   },

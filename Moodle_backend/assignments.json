@@ -1,0 +1,50 @@
+[
+    {
+        "title": "Attendance",
+        "due_date": "Tomorrow, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1730955600",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Assignment 02 is due",
+        "due_date": "Tomorrow, 1:15 PM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731003300",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Design Phase is due",
+        "due_date": "Saturday, November 9, 12:00 PM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731171600",
+        "course": "CMPG 756 Software Engineering (01) X CMPT45601 [24F]"
+    },
+    {
+        "title": "Attendance",
+        "due_date": "Monday, November 11, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731301200",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Attendance",
+        "due_date": "Thursday, November 14, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731560400",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Attendance",
+        "due_date": "Monday, November 18, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731906000",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Attendance",
+        "due_date": "Thursday, November 21, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732165200",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Attendance",
+        "due_date": "Monday, November 25, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732510800",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    }
+]

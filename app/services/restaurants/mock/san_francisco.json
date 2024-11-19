@@ -21,7 +21,7 @@
           }
         },
         "ix": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
-        "name": "Zuni Café",
+        "name": "Tijuana Nites",
         "opening_hours": {
           "open_now": true
         },
@@ -41,19 +41,17 @@
           "global_code": "",
         },
         "price_level": 3,
-        "rating": 4.4,
+        "rating": 5.0,
         "reference": "",
         "scope": "",
         "types": [
-          "cafe",
-          "bar",
           "restaurant",
           "food",
           "point_of_interest",
           "establishment"
         ],
         "user_ratings_total": 1675,
-        "vicinity": "1658 Market Street, San Francisco"
+        "vicinity": "216 W 242nd St, Bronx, NY, 10471"
       },
       {
         "business_status": "OPERATIONAL",
@@ -127,7 +125,7 @@
         "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png",
         "name": "DNA Lounge",
         "opening_hours": {
-          "open_now": false
+          "open_now": true
         },
         "photos": [
           {
