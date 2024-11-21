@@ -98,12 +98,12 @@ export const MapScreen = () => {
 const styles = StyleSheet.create({
   searchBar: {
     height: 50,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: 'green',
+    borderWidth: 5,
     borderRadius: 5,
     paddingHorizontal: 10,
     margin: 10,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
   },
   markerContainer: {
     alignItems: 'center',
