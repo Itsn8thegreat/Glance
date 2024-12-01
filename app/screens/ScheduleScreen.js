@@ -1,111 +1,134 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
+import React, { useEffect, useState } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+  Image,
+  Linking,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+
+// Local course data import (you should replace this with the correct path)
+import courseData from '../../Backend/courseData.json'; 
 
 const ScheduleScreen = () => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-  // Example function to handle button press
-  const handleClassInfoPress = (index) => {
-    console.log(`Class Info Button ${index + 1} pressed`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Use the local course data file directly
+        setCourses(courseData);
+      } catch (error) {
+        console.error('Error fetching course data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleLinkPress = (url) => {
+    if (url) {
+      Linking.openURL(url).catch((err) =>
+        console.error("Failed to open URL:", err)
+      );
+    }
   };
 
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color="green" />
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      {/* Back Button */}
+    <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-
-      <Text style={styles.header}>SCHEDULE</Text>
-      <Text style={styles.subheader}>WEEK AT A GLANCE</Text>
-
-      {/* Green Box replaced with Image */}
-      <View style={styles.greenBox}>
-        <Image
-          source={require('../../Backend/course_schedule.png')} // Adjust path as needed
-          style={styles.scheduleImage}
-          resizeMode="contain"
-        />
-      </View>
-
-      <Text style={styles.classInfoHeader}>CLASS INFO</Text>
-
-      <View style={styles.classInfoContainer}>
-        {Array.from({ length: 8 }, (_, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.classInfoButton}
-            onPress={() => handleClassInfoPress(index)}
-          >
-            <Text style={styles.buttonText}>Class {index + 1}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Green Box with Image */}
+        <View style={styles.greenBox}>
+          <Image
+            source={require('../../Backend/course_schedule.png')} // Adjust path as needed
+            style={styles.scheduleImage}
+            resizeMode="contain"
+          />
+        </View>
+        {courses.length > 0 ? (
+          courses.map((course, index) => (
+            <View key={index} style={styles.courseCard}>
+              <Text style={styles.courseTitle}>{course.name || 'No Course Name'}</Text>
+              <Text>Course Number: {course.number || 'N/A'}</Text>
+              <Text>Timing: {course.timing || 'N/A'}</Text>
+              <Text>Location: {course.location || 'N/A'}</Text>
+              <Text
+                style={styles.linkText}
+                onPress={() => handleLinkPress(course.link)}
+              >
+                {course.link || 'No Link Provided'}
+              </Text>
+            </View>
+          ))
+        ) : (
+          <Text>No course data available.</Text>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    alignItems: 'center',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     padding: 20,
+  },
+  courseCard: {
+    marginBottom: 15,
+    padding: 15,
+    backgroundColor: 'green',
+    borderRadius: 10,
+  },
+  courseTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: 'white',
   },
   backButton: {
     alignSelf: 'flex-start', // Aligns back button to the start
     margin: 10,
   },
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'green',
-    marginVertical: 20,
-  },
-  subheader: {
-    fontSize: 18,
-    color: 'gray',
-    marginBottom: 20,
-  },
   greenBox: {
-    width: '100%',
-    height: 200, // Increased height for larger image
+    height: 200,
     backgroundColor: 'green',
-    justifyContent: 'center', // Center the image vertically
-    alignItems: 'center', // Center the image horizontally
-    marginBottom: 20,
-  },
-  scheduleImage: {
-    width: '1000%', // Increased width
-    height: '100%', // Increased height
-  },
-  classInfoHeader: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'gray',
-    marginVertical: 10,
-  },
-  classInfoContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  classInfoButton: {
-    width: '48%', // Adjust to create two columns
-    height: 70,
-    backgroundColor: 'black',
-    marginBottom: 10,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
     borderRadius: 10,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
+  scheduleImage: {
+    width: '100%',
+    height: '100%',
+  },
+  linkText: {
+    color: 'blue',
+    textDecorationLine: 'underline',
+    marginTop: 5,
   },
 });
 

@@ -11,9 +11,6 @@ from bs4 import BeautifulSoup
 from threading import Thread
 import requests
 import time
-from PIL import Image
-import io
-
 
 # Flask app setup
 app = Flask(__name__)
@@ -30,77 +27,108 @@ def load_credentials(file_path):
         credentials = json.load(f)
     return credentials['username'], credentials['password']
 
+def extract_course_details(driver):
+    """Extract course details from the datadisplaytable on the course schedule page."""
+    try:
+        # Get the page source and parse with BeautifulSoup
+        soup = BeautifulSoup(driver.page_source, "html.parser")
+        course_table = soup.find("table", class_="datadisplaytable")
+        
+        courses = []
+        seen_courses = set()
+
+        # Iterate through table rows and extract course information
+        for row in course_table.find_all("tr"):
+            cell = row.find("td", class_="ddlabel")
+            if cell:
+                course_text = cell.get_text(separator=" ").strip()
+
+                # Avoid duplicates by checking if we've seen this course before
+                if course_text not in seen_courses:
+                    seen_courses.add(course_text)
+
+                    # Extract the link
+                    link = cell.find("a")["href"] if cell.find("a") else None
+                    
+                    # Split the course text by spaces, but handle timing and location separately
+                    details = course_text.split(" ")
+
+                    # The first part is the course name and number (e.g., CMPT 456-01)
+                    course_name = details[0] + " " + details[1]  # Combining course name and number
+                    course_number = details[2] if len(details) > 2 else "N/A"
+
+                    # Now extract the timing and location more accurately
+                    # Timing should be something like "Lecture 9:30 am-10:45 am"
+                    timing_end_index = len(details) - 2  # Timing ends before the building/room part
+                    timing = " ".join(details[3:timing_end_index]) if len(details) > 3 else "N/A"
+                    
+                    # Location is the last two parts (building and room number)
+                    location = " ".join(details[timing_end_index:]) if len(details) > timing_end_index else "N/A"
+
+                    courses.append({
+                        "name": course_name,
+                        "number": course_number,
+                        "timing": timing,
+                        "location": location,
+                        "link": link
+                    })
+
+        return courses
+
+    except Exception as e:
+        print(f"Error extracting course details: {e}")
+        return []
+
 def login_and_navigate(username, password):
-    """Log into the Banner page, navigate to the course schedule, and capture a full-page screenshot."""
-    # Set up Chrome options for headless mode with full-page screenshots
+    """Log into the Banner page, navigate to the course schedule, and extract course details."""
+    # Set up Chrome options for headless mode
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--window-size=1920,1080")  # Set an initial viewport size
-    chrome_options.add_argument("--start-maximized")  # Optionally, maximize window size
+    chrome_options.add_argument("--window-size=1920,1080")
     
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     
     try:
         # Open the LMS page
         driver.get(BANNER_URL)
-        print("Opened Self-service page.")
 
         # Click the login link
         login_link = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.LINK_TEXT, "Log in")))
         login_link.click()
-        print("Clicked the 'Log in' link.")
 
         # Wait for the login form and submit credentials
         WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.NAME, "j_username")))
+
         driver.find_element(By.NAME, "j_username").send_keys(username)
         driver.find_element(By.NAME, "j_password").send_keys(password)
         driver.find_element(By.NAME, "_eventId_proceed").click()
-        print("Logged in successfully.")
 
         driver.get(PROFILE_URL)
         # Navigate to the course schedule page
         driver.get(COURSE_SCHEDULE_URL)
-        print("Navigated to Course Schedule Page")
 
         # Wait for the course schedule table to load
-        WebDriverWait(driver, 15).until(
-            EC.visibility_of_element_located((By.CLASS_NAME, "datadisplaytable"))
-        )
-        print("Located course schedule element.")
+        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CLASS_NAME, "datadisplaytable")))
 
-        # Capture full-page screenshot
-        screenshot = driver.get_screenshot_as_png()
-        full_page_image = Image.open(io.BytesIO(screenshot))
+        # Extract course details
+        courses = extract_course_details(driver)
 
-        # Save the full-page screenshot as "course_schedule.png"
-        full_page_image.save("course_schedule.png", "PNG")
-        print("Full-page screenshot saved as 'course_schedule.png'.")
-        
-        return "Full-page screenshot captured and saved as 'course_schedule.png'."
+        return courses
     
     except Exception as e:
         print(f"An error occurred: {e}")
-        return str(e)
+        return []
     
     finally:
         driver.quit()
 
-
-
-@app.route('/profile', methods=['GET'])
-def get_profile():
-    """API endpoint to fetch and capture the course schedule page screenshot."""
+@app.route('/courses', methods=['GET'])
+def get_courses():
     try:
         username, password = load_credentials("editme.json")
-        print("Loaded credentials.")
-        
-        result = login_and_navigate(username, password)
-        print(result)
-        
-        return jsonify({"message": result}), 200
-
+        courses = login_and_navigate(username, password)
+        return jsonify(courses), 200
     except Exception as e:
-        print(f"Error in get_profile: {e}")
         return jsonify({"error": str(e)}), 500
 
 def run_server():
@@ -112,17 +140,17 @@ if __name__ == '__main__':
     server_thread.start()
     time.sleep(2)
 
-    # Client-side code to fetch profile data
+    # Client-side code to fetch course data
     try:
-        response = requests.get('http://127.0.0.1:5001/profile')
+        response = requests.get('http://127.0.0.1:5001/courses')
         response.raise_for_status()  # Raise error if response code is not 200
 
         # Attempt to parse JSON response
-        profile_data = response.json()
-        print("Profile data:", profile_data)
+        courses_data = response.json()
+        print("Courses data:", courses_data)
 
     except requests.exceptions.RequestException as e:
-        print('Error fetching profile:', e)
+        print('Error fetching course data:', e)
 
     except ValueError:
         print("Error: The server response is not valid JSON. Here’s the raw response content:", response.text)
