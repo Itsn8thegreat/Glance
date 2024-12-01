@@ -12,6 +12,7 @@ from threading import Thread
 import requests
 import time
 
+
 # Flask app setup
 app = Flask(__name__)
 CORS(app)  # Enable CORS to allow React frontend access
@@ -79,7 +80,7 @@ def login_and_get_session(username, password):
 def get_assignments():
     """API endpoint to fetch assignments."""
     try:
-        username, password = load_credentials("/Users/stefan/Glance/Backend/editme.json")
+        username, password = load_credentials("editme.json")
         assignments_page_source = login_and_get_session(username, password)
         print("Successfully logged in and retrieved page source.")
 

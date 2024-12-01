@@ -1,24 +1,6 @@
 [
     {
         "title": "Attendance",
-        "due_date": "Thursday, November 14, 12:00 AM",
-        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731560400",
-        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
-    },
-    {
-        "title": "Attendance",
-        "due_date": "Monday, November 18, 12:00 AM",
-        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731906000",
-        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
-    },
-    {
-        "title": "Project Deliverable 02 is due",
-        "due_date": "Monday, November 18, 1:15 PM",
-        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1731953700",
-        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
-    },
-    {
-        "title": "Attendance",
         "due_date": "Thursday, November 21, 12:00 AM",
         "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732165200",
         "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
@@ -30,6 +12,12 @@
         "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
     },
     {
+        "title": "Paper 2 - Part 1",
+        "due_date": "Tuesday, November 26, 11:59 PM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732683540",
+        "course": "HIST 150 Roots:History (01,02) [24F]"
+    },
+    {
         "title": "Attendance",
         "due_date": "Thursday, November 28, 12:00 AM",
         "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732770000",
@@ -39,6 +27,12 @@
         "title": "Attendance",
         "due_date": "Monday, December 2, 12:00 AM",
         "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1733115600",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Attendance",
+        "due_date": "Thursday, December 5, 12:00 AM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1733374800",
         "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
     }
 ]
