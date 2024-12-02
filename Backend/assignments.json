@@ -1,19 +1,7 @@
 [
     {
-        "title": "Attendance",
-        "due_date": "Thursday, November 21, 12:00 AM",
-        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732165200",
-        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
-    },
-    {
-        "title": "Attendance",
-        "due_date": "Monday, November 25, 12:00 AM",
-        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732510800",
-        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
-    },
-    {
         "title": "Paper 2 - Part 1",
-        "due_date": "Tuesday, November 26, 11:59 PM",
+        "due_date": "Today, 11:59 PM",
         "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1732683540",
         "course": "HIST 150 Roots:History (01,02) [24F]"
     },
@@ -24,9 +12,21 @@
         "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
     },
     {
+        "title": "Implementation and Test Phase is due",
+        "due_date": "Saturday, November 30, 11:59 PM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1733029140",
+        "course": "CMPG 756 Software Engineering (01) X CMPT45601 [24F]"
+    },
+    {
         "title": "Attendance",
         "due_date": "Monday, December 2, 12:00 AM",
         "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1733115600",
+        "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
+    },
+    {
+        "title": "Assignment 03 is due",
+        "due_date": "Monday, December 2, 12:00 PM",
+        "link": "https://lms.manhattan.edu/calendar/view.php?view=day&time=1733158800",
         "course": "CMPT 364 Cloud Computing and Virtualization (01) X CMPG76401 [24F]"
     },
     {
