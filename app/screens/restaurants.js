@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Image, StyleSheet } from "react-native";
-import restaurantData from "/Users/stefan/Glance/app/services/restaurants/mock/san_francisco.json"; // Adjust path as needed
+import restaurantData from "\Users\natha\OneDrive\Desktop\Glance\app\services\restaurants\mock\san_francisco.json"; // Adjust path as needed
 
 export const RestaurantsScreen = () => {
   const [restaurants, setRestaurants] = useState([]);

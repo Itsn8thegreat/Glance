@@ -28,9 +28,9 @@ const HomeScreen = ({ navigation }) => {
     require('../assets/Schedule.png'),
     require('../assets/assignments.png'),
     require('../assets/moodle.png'),
-    require('../assets/black.png'),
-    require('../assets/black.png'),
-    require('../assets/black.png'),
+    require('../assets/exam.png'),
+    require('../assets/jaspers.png'),
+    require('../assets/calendar.png'),
     require('../assets/black.png'),
     require('../assets/black.png'),
     require('../assets/black.png'),
@@ -50,6 +50,19 @@ const HomeScreen = ({ navigation }) => {
         navigation.navigate('AssignmentsScreen'); 
         break;
       case 3:
+        navigation.navigate('WebviewScreen', { url: 'https://lms.manhattan.edu/my/' });
+        break;
+      case 4:
+        navigation.navigate('WebviewScreen', { url: 'https://inside.manhattan.edu/academic-resources/registrar/final-exam-schedule.php'});
+        break;
+      case 5:
+        navigation.navigate('WebviewScreen', { url: 'https://gojaspers.com/'});
+        break;
+      case 6:
+        navigation.navigate('WebviewScreen', { url: 'https://inside.manhattan.edu/academic-resources/registrar/academic-calendar.php'});
+        break;
+      case 7:
+        navigation.navigate('WebviewScreen', { url: 'https://gojaspers.com/'});
         break;
         
       // Add similar cases for other buttons/screens

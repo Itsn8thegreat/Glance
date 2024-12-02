@@ -1,0 +1,23 @@
+[
+    {
+        "name": "CMPT 456-01",
+        "number": "8614",
+        "timing": "Lecture 9:30 am-10:45 am",
+        "location": "HAY 203",
+        "link": "/PROD/bwskfshd.P_CrseSchdDetl?term_in=202510&crn=8614"
+    },
+    {
+        "name": "HIST 150-01",
+        "number": "8496",
+        "timing": "Lecture 11:00 am-12:15 pm",
+        "location": "MGL 306",
+        "link": "/PROD/bwskfshd.P_CrseSchdDetl?term_in=202510&crn=8496"
+    },
+    {
+        "name": "CMPT 364-01",
+        "number": "10291",
+        "timing": "Dual-Virtual & In-person 12:00 pm-1:15 pm",
+        "location": "HAY 203",
+        "link": "/PROD/bwskfshd.P_CrseSchdDetl?term_in=202510&crn=10291"
+    }
+]
